@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="SuperCrown">
+  <meta name="description" content="반응형 사이트 만들기 튜토리얼 입니다.">
+
+  <!-- HTML5shiv -->
+  <!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]-->
+
+  <!-- IE checker -->
+  <script src="javascripts/ie-checker-min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/main/main.css">
+    <link rel="stylesheet" href="/stylesheets/customer/master.css">
+</head>
+<body>
+
+<div id="wrap">
+    <!-- ======  Nav section start  ====== -->
+    <% include ../nav.ejs %>
+    <!-- ======  Nav section end  ====== -->
+     <div class="buttons">
+    <a class="btn btn-default" href="/customer/new">New</a>
+   </div>
+
+   <table class="table table-striped posts">
+    <thead>
+     <tr>
+      <th class="title">Title</th>
+      <th class="date">Date</th>
+     </tr>
+    </thead>
+    <tbody>
+     <% posts.forEach(function(post) { %>
+      <tr>
+       <td class="title">
+        <a href="/customer/<%= post.id %>"><div><%= post.title %></div></a>
+       </td>
+       <td class="date">
+        <%= post.createdDate %>
+       </td>
+      </tr>
+     <% }) %>
+    </tbody>
+   </table>
+ <!-- container end -->
+  
+
+  
+</div>
+    <!-- ======  Wrap section end  ====== -->
+
+    
+
+  <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/javascripts/nav.js"></script>
+
+</body>
+
+</html>
