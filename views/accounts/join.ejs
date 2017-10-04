@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="SuperCrown">
+  <meta name="description" content="반응형 사이트 만들기 튜토리얼 입니다.">
+
+  <!-- HTML5shiv -->
+  <!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]-->
+
+  <!-- IE checker -->
+  <script src="/javascripts/ie-checker-min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/accounts/join.css">
+</head>
+<body>
+
+<div id="wrap">
+ <% include ../nav.ejs %>
+ 
+
+<div class="wrap-1">
+</div>
+
+<!-- ******  Login section start  ****** -->
+    <section class="login-section">
+    <div class="join-wrap">
+    <div class="client">
+    의뢰자
+    </div>
+    <div class="designer">
+    디자이너
+    </div>
+    </div>
+    <div class="join-form">
+        <div class="panel-body">
+            <form role="form" action="/accounts/join" id="join_form" method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="">이메일을 입력* </label>
+                        <input class="form-control" placeholder="Email" name="username" type="email" autofocus="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">비밀번호를 입력* </label>
+                        <input class="form-control" placeholder="Password" name="password" type="password" value="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">비밀번호 확인 </label>
+                        <input class="form-control" placeholder="Password 확인" name="password2" type="password" value="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">닉네임을 입력* </label>
+                        <input class="form-control" placeholder="닉네임" name="nickname" type="text" value="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">이름* </label>
+                        <input class="form-control" placeholder="이름" name="displayname" type="text" value="" required="">
+                    </div>
+                    <!-- Change this to a button or input when using this as a form -->
+                    <input type="submit" class="btn btn-lg btn-success btn-block" style="margin-top:20px;" value="가입하기"/>
+                    <div style="margin-top: 20px">
+                        <a href="/auth/facebook" class="btn btn-lg btn-primary btn-block">
+                        <i class="fa fa-facebook" aria-hidden="true"></i> 페이스북 로그인
+                        </a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    </section>
+  <!-- ======  Login section end  ====== -->
+</div>
+<!-- ======  Wrap section end  ====== -->
+
+  <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/javascripts/nav.js"></script>
+    <script>
+    
+    // 회원가입 섹션
+    (function(){
+    $(document).ready(function() {
+        $('#join_form').submit(function(){
+            var $usernameInput = $('#join_form input[name=username]');
+            var $passwordInput = $('#join_form input[name=password]');
+            var $passwordInput2 = $('#join_form input[name=password2]');
+            var $nickname = $('#join_form input[name=nickname]');
+            var $displayname = $('#join_form input[name=displayname]');
+ 
+            if(!$usernameInput.val()){
+                alert("이메일을 입력해주세요.");
+                $emailInput.focus();
+                return false;
+            }
+            if(!$passwordInput.val()){
+                alert("패스워드를 입력해주세요.");
+                $passwordInput.focus();
+                return false;
+            }
+            if(!$passwordInput2.val()){
+                alert("확인 패스워드를 입력해주세요.");
+                $passwordInput2.focus();
+                return false;
+            }
+            if(!$displayname.val()){
+                alert("이름을 입력해주세요.");
+                $displayname.focus();
+                return false;
+            }
+            if(!$nickname.val()){
+                alert("닉네임을 입력해주세요.");
+                $nickname.focus();
+                return false;
+            }
+            if($passwordInput.val() !== $passwordInput2.val()){
+                alert("패스워드와 확인용패스워드를 똑같이 입력해주세요.");
+                return false;
+            }
+            return true;
+        });
+    });
+})();
+    </script>
+</body>
+
+</html>

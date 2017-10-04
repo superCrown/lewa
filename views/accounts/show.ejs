@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="SuperCrown">
+  <meta name="description" content="반응형 사이트 만들기 튜토리얼 입니다.">
+
+  <!-- HTML5shiv -->
+  <!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]-->
+
+  <!-- IE checker -->
+  <script src="/javascripts/ie-checker-min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/main/main.css">
+    <link rel="stylesheet" href="/stylesheets/accounts/master.css">
+</head>
+<body>
+<div id="wrap">
+    <!-- ======  Nav section start  ====== -->
+    <% include ../nav.ejs %>
+    <!-- ======  Nav section end  ====== -->
+    <div class="container user user-show">
+
+   <div class="buttons">
+    <a class="btn btn-default" href="/">Back</a>
+    <a class="btn btn-default" href="/accounts/<%=user.id%>/edit">Edit</a>
+   </div>
+
+   <form class="user-form form-horizontal" action="/users" method="post">
+    <div class="contentBox">
+     <h3 class="contentBoxTop"></h3> 
+     <fieldset disabled>
+      <div class="form-group">
+       <label for="name" class="col-sm-3">Username</label>
+       <div class="col-sm-9">
+        <input class="form-control" type="text" id="name" name="name" value="<%=user.username%>">
+       </div>
+      </div>
+      <div class="form-group">
+       <label for="email" class="col-sm-3">NickName</label>
+       <div class="col-sm-9">
+        <input class="form-control" type="text" id="email" name="email" value="<%=user.nickname%>">
+       </div>
+      </div>
+     </fieldset>
+    </div>
+   </form>
+
+  </div> <!-- container end -->
+
+</div>
+<!-- ======  Wrap section end  ====== -->
+
+  <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/javascripts/nav.js"/>
+    <script>
+      
+    </script>
+</body>
+
+</html>
