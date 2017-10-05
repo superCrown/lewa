@@ -1,53 +1,27 @@
 var express = require('express');
-
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-
+var mongoose = require('mongoose');
 var UserModel = require('../../models/UserModel');
-var passwordHash = require('../../libs/passwordHash');
+var isLoggedIn = require('../../libs/isLoggedIn')
+
+
+var passport = require('../../config/passport.js');
+var checkUserRegValidation = require('../../libs/checkUserRegValidation');
 
 var router = express.Router();
-
-passport.serializeUser(function (user, done) {
-    console.log('serializeUser');
-    done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-    var result = user;
-    result.password = "";
-    console.log('deserializeUser');
-    done(null, result);
-});
-
-passport.use(new LocalStrategy({
-        usernameField : 'username',
-        passwordField : 'password',
-        passReqToCallback : true
-    }, 
-    function (req, username, password, done) {
-        UserModel.findOne({ username : username , password : passwordHash(password) }, function (err,user) {
-            if (!user){
-                return done(null, false, { message: '아이디 또는 비밀번호 오류 입니다.' });
-            }else{
-                return done(null, user );
-            }
-        });
-    }
-));
-
-
 
 /* GET join page. */
 
 router.get('/join', function(req, res, next) {
-    res.render('accounts/join' , {user:req.user});
+    res.render('accounts/join' , {
+        emailError: req.flash('emailError')[0],
+        nicknameError: req.flash('nicknameError')[0], 
+        user:req.user
+        });
   });
 
-
-  router.post('/join', function(req, res){
+  router.post('/join', checkUserRegValidation, function(req, res){
     var User = new UserModel({
-        username : req.body.username,
+        email : req.body.email,
         password : passwordHash(req.body.password),
         nickname : req.body.nickname,
         displayname : req.body.displayname
@@ -60,16 +34,17 @@ router.get('/join', function(req, res, next) {
 /* ====GET join page. =====*/
 
 
-
-
 /* GET login page. */
 
 router.get('/login', function(req, res){
-    res.render('accounts/login', { flashMessage : req.flash().error, user:req.user  });
+    res.render('accounts/login', { 
+        flashMessage : req.flash().error, 
+        user:req.user  
+    });
 });
 
 router.post('/login' , 
-passport.authenticate('local', { 
+passport.authenticate('local-login', { 
     failureRedirect: '/accounts/login', 
     failureFlash: true 
 }), 
@@ -87,43 +62,91 @@ router.get('/logout', function(req, res){
 
  
 // // show
-router.get("/:id", function(req, res){
+router.get("/:id", isLoggedIn, function(req, res){
     UserModel.findOne({'id' :req.params.id}, function(err, user){
      if(err) return res.json(err);
      res.render("accounts/show", {user:req.user});
     });
    });
 
-// edit
-router.get("/:id/edit", function(req, res){
-    UserModel.findOne({'id' :req.params.id}, function(err, user){
-     if(err) return res.json(err);
-     res.render("accounts/edit", {user:req.user});
+   // edit
+router.get('/:id/edit', isLoggedIn,  function(req,res){
+if(req.user.id != req.params.id) return res.json({success:false, message:"허용되지 않은 접근입니다."});
+UserModel.findOne({ 'id' :req.params.id}, function (err,user) {
+    if(err) return res.json({success:false, message:err});
+    res.render("accounts/edit", {
+                            user: user,
+                            formData: req.flash('formData')[0],
+                            emailError: req.flash('emailError')[0],
+                            nicknameError: req.flash('nicknameError')[0],
+                            passwordError: req.flash('passwordError')[0]
+                            }
+         );
     });
-   });
-   
-   // update // 2
-   router.post("/:id",function(req, res, next){
-    UserModel.findOne({'id' :req.params.id}) // 2-1
-    .select("password") // 2-2
-    .exec(function(err, user){
-     if(err) return res.json(err);
-     var user = req.user;
-     // update user object
-     user.originalPassword = user.password;
-     user.password = req.body.newPassword? req.body.newPassword : user.password; // 2-3
-     for(var p in req.body){ // 2-4
-      user[p] = req.body[p];
-     }
-     // save updated user
-     UserModel.save(function(err, user){
-      if(err) return res.json(err);
-      res.send('<script>alert("변경 성공");location.href="/accounts/"+req.params.nickname";</script>');
-    //   res.redirect("/users/"+req.params.nickname);
-     });
+});
+  
+  router.put('/:id', isLoggedIn, checkUserRegValidation, function(req,res){
+    if(req.user.id != req.params.id) return res.json({success:false, message:"허용되지 않은 접근입니다."});
+    UserModel.findOne({'id' : req.params.id}, req.body.user, function (err,user) {
+      if(err) return res.json({success:"false", message:err});
+      if(user.authenticate(req.body.user.password)){
+        if(req.body.user.newPassword){
+          user.password = req.body.user.newPassword;
+          user.save();
+        } else {
+          delete req.body.user.password;
+        }
+        User.findByIdAndUpdate(req.params.id, req.body.user, function (err,user) {
+          if(err) return res.json({success:"false", message:err});
+          res.redirect('/accounts/'+req.params.id);
+        });
+      } else {
+        req.flash("formData", req.body.user);
+        req.flash("passwordError", "- Invalid password");
+        res.redirect('/accounts/'+req.params.id+"/edit");
+      }
     });
-   });
+  }); //update
+
+  function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()){
+      return next();
+    }
+    res.redirect('/');
+  }
+
+
+// // edit
+// router.get("/:id/edit", isLoggedIn, function(req, res){
+//     UserModel.findOne({'id' :req.params.id}, function(err, user){
+//      if(err) return res.json(err);
+//      res.render("accounts/edit", {user:req.user});
+//     });
+//    });
    
+//    // update // 2
+//    router.post("/:id",function(req, res, next){
+//     UserModel.findOne({'id' :req.params.id}) // 2-1
+//     .select("password") // 2-2
+//     .exec(function(err, user){
+//      if(err) return res.json(err);
+//      var user = req.user;
+//      // update user object
+//      user.originalPassword = user.password;
+//      user.password = req.body.newPassword? req.body.newPassword : user.password; // 2-3
+//      for(var p in req.body){ // 2-4
+//       user[p] = req.body[p];
+//      }
+//      // save updated user
+//      UserModel.save(function(err, user){
+//       if(err) return res.json(err);
+//       res.send('<script>alert("변경 성공");location.href="/accounts/"+req.params.nickname";</script>');
+//     //   res.redirect("/users/"+req.params.nickname);
+//      });
+//     });
+//    });
+   
+
 
 
 module.exports = router;

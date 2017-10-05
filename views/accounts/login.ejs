@@ -63,7 +63,7 @@
                         <fieldset>
                             <div class="input-group form-group">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                                <input type="email" class="form-control" name="username" placeholder="Email" autofocus="" required="">
+                                <input type="email" class="form-control" name="email" placeholder="Email" autofocus="" required="">
                             </div>
                             <span class="help-block"></span>
                                                 
@@ -107,7 +107,7 @@
     $(function () {
             $(document).ready(function () {
                 $('#login_form').submit(function () {
-                    var $usernameInput = $('#login_form input[name=username]');
+                    var $usernameInput = $('#login_form input[name=email]');
                     var $passwordInput = $('#login_form input[name=password]');
 
                     if (!$usernameInput.val()) {

@@ -21,7 +21,7 @@ db.once('open', function () {
     console.log('mongodb connect');
 });
 
-var connect = mongoose.connect('mongodb://127.0.0.1:27017/loud', 
+var connect = mongoose.connect('mongodb://127.0.0.1:27017/loud6', 
 {
     useMongoClient: true
 });

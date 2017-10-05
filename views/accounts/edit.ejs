@@ -26,58 +26,25 @@
     <!-- ======  Nav section start  ====== -->
     <% include ../nav.ejs %>
     <!-- ======  Nav section end  ====== -->
-     <div class="container user user-edit">
-
-   <div class="buttons">
-    <a class="btn btn-default" href="/accounts/<%=user.id%>">Back</a>
-   </div>
-
-   <form class="user-form form-horizontal" action="/accounts/<%=user.id%>" method="post">
-    <div class="contentBox">
-     <h3 class="contentBoxTop">Edit User</h3>
-     <fieldset>
-      <div class="form-group">
-       <label for="currentPassword" class="col-sm-12 control-label">Current Password*</label>
-       <div class="col-sm-9 col-sm-offset-3">
-        <input class="form-control" type="password" id="currentPassword" name="currentPassword" value="">
-       </div>
-      </div>
-      <hr></hr>
-      <div class="form-group">
-       <label for="username" class="col-sm-3 control-label">Username*</label>
-       <div class="col-sm-9">
-        <input class="form-control" type="text" id="username" name="username" value="<%= user.username %>">
-       </div>
-      </div>
-      <div class="form-group">
-       <label for="name" class="col-sm-3 control-label">Nickname*</label>
-       <div class="col-sm-9">
-        <input class="form-control" type="text" id="name" name="name" value="<%= user.nickname %>">
-       </div>
-      </div>
-      <div class="form-group">
-       <label for="newPassword" class="col-sm-12 control-label">New Password</label>
-       <div class="col-sm-9 col-sm-offset-3">
-        <input class="form-control" type="password" id="newPassword" name="newPassword" value="">
-       </div>
-      </div>
-      <div class="form-group">
-       <label for="passwordConfirmation" class="col-sm-12 control-label">Password Confirmation</label>
-       <div class="col-sm-9 col-sm-offset-3">
-        <input class="form-control" type="password" id="passwordConfirmation" name="passwordConfirmation" value="">
-       </div>
-      </div>
-      <p>
-       <small>*Required</small>
-      </p>
-     </fieldset>
-    </div>
-    <div class="buttons">
-     <button type="submit" class="btn btn-default">Submit</button>
-    </div>
-   </form>
-
-  </div> <!-- container end -->
+     <div class="edit">
+  <h3>Update User Information</h3>
+  <form id="update_user" class="users_form" action="/accounts/<%= user.id %>?_method=put" method="post">
+    <label>Current Password* <span id="password_error" class="error_message"><%= passwordError?passwordError:"" %></span></label>
+    <input type="password" id="password" name="user[password]" value="">
+    <hr><br>
+    <label>Email* <span id="email_error" class="error_message"><%= emailError?emailError:"" %></span></label>
+    <input type="text" id="email" name="user[email]" value="<%= formData?formData.email:(user?user.email:"") %>">
+    <label>Nickname* <span id="nickname_error" class="error_message"><%= nicknameError?nicknameError:"" %></span></label>
+    <input type="text" id="nickname" name="user[nickname]" value="<%= formData?formData.nickname:(user?user.nickname:"") %>">
+    <label>New Password</label>
+    <input type="password" id="new_password" name="user[newPassword]" value="">
+    <label>Password Confirmation <span id="password_confirmation_error" class="error_message"></span></label>
+    <input type="password" id="password_confirmation" name="user[passwordConfirmation]" value="">
+    <p><small>*Required</small></p>
+    <input type="button" class="submit_btn" value="submit">
+  </form>
+  <a href="javascript:history.back()"><button>Back</button>
+</div>
 
 </div>
 <!-- ======  Wrap section end  ====== -->
@@ -86,6 +53,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/javascripts/nav.js"/>
+    <script type="text/javascript" src="/javascripts/userform.js"></script>
     <script>
       
     </script>
