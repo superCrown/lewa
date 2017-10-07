@@ -10,7 +10,7 @@
 
       <div class="buttons">
         <a class="btn btn-default" href="/users">Back</a>
-        <% if(isAuthenticated && currentUser.id == user.id){ %>
+        <% if(users && user._id == user._id){ %>
           <a class="btn btn-default" href="/users/<%= user.id %>/edit">Edit</a>
         <% } %>
       </div>

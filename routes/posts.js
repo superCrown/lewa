@@ -10,7 +10,11 @@ router.get("/", function(req, res){
   .sort("-createdAt")
   .exec(function(err, posts){
     if(err) return res.json(err);
-    res.render("posts/index", {posts:posts});
+    res.render("posts/index", {
+      isLogin : req.user,
+      users : req.user, 
+      posts:posts
+    });
   });
 });
 
@@ -18,7 +22,9 @@ router.get("/", function(req, res){
 router.get("/new", util.isLoggedin, function(req, res){
   var post = req.flash("post")[0] || {};
   var errors = req.flash("errors")[0] || {};
-  res.render("posts/new", { post:post, errors:errors });
+  res.render("posts/new", { 
+    users : req.user,
+    post:post, errors:errors });
 });
 
 // create
@@ -40,7 +46,10 @@ router.get("/:id", function(req, res){
   .populate("author")
   .exec(function(err, post){
     if(err) return res.json(err);
-    res.render("posts/show", {post:post});
+    res.render("posts/show", {
+      users : req.user, 
+      isLogin : req.user,
+      post:post});
   });
 });
 
@@ -51,11 +60,17 @@ router.get("/:id/edit", util.isLoggedin, checkPermission, function(req, res){
   if(!post){
     Post.findOne({_id:req.params.id}, function(err, post){
       if(err) return res.json(err);
-      res.render("posts/edit", { post:post, errors:errors });
+      res.render("posts/edit", {
+        users : req.user,
+        isLogin : req.user,
+        post:post, errors:errors });
     });
   } else {
     post._id = req.params.id;
-    res.render("posts/edit", { post:post, errors:errors });
+    res.render("posts/edit", { 
+      users : req.user,
+      isLogin : req.user,
+      post:post, errors:errors });
   }
 });
 
@@ -84,10 +99,12 @@ module.exports = router;
 
 // private functions
 function checkPermission(req, res, next){
-  Post.findOne({_id:req.params.id}, function(err, post){
+  Post.findOne({'_id': req.params.id}, function(err, post){
     if(err) return res.json(err);
-    if(post.author != req.user.id) return util.noPermission(req, res);
-
+    if(JSON.stringify(post.author) != JSON.stringify(req.user._id)) {
+    return util.noPermission(req, res);
+    } else {
     next();
+    }
   });
 }

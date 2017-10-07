@@ -27,9 +27,9 @@
             </div>
             <hr></hr>
             <div class="form-group <%= (errors.email)?'has-error':'' %>">
-              <label for="email" class="col-sm-3 control-label">Email*</label>
+              <label for="email" class="col-sm-3 control-label">Email</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" id="email" name="email" value="<%= user.id %>">
+                <input disabled class="form-control" type="text" id="email" name="email" value="<%= user.email %>">
                 <% if(errors.email){ %>
                   <span class="help-block"><%= errors.email.message %></span>
                 <% } %>
@@ -38,18 +38,9 @@
             <div class="form-group <%= (errors.name)?'has-error':'' %>">
               <label for="name" class="col-sm-3 control-label">Name*</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
+                <input disabled class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
                 <% if(errors.name){ %>
                   <span class="help-block"><%= errors.name.message %></span>
-                <% } %>
-              </div>
-            </div>
-            <div class="form-group <%= (errors.email)?'has-error':'' %>">
-              <label for="email" class="col-sm-3 control-label">Email</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" id="email" name="email" value="<%= user.email %>">
-                <% if(errors.email){ %>
-                  <span class="help-block"><%= errors.email.message %></span>
                 <% } %>
               </div>
             </div>

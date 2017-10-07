@@ -5,17 +5,19 @@ var util = require("../util");
 var postSchema = mongoose.Schema({
   title: {
     type: String,
-    required: [true, "Title is required!"]
+    required: [true, "제목은 필수입니다."]
   },
   body: {
     type: String,
-    required: [true, "Body is required!"]
+    required: [true, "내용은 필수입니다."]
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: true
-  },
+    required: true,
+    username : {
+        type : String
+  }},
   createdAt: {
     type: Date,
     default: Date.now

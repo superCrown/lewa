@@ -29,7 +29,7 @@ passport.use("local-login",
           return done(null, user);
         } else {
           req.flash("email", email);
-          req.flash("errors", {login:"Incorrect email or password"});
+          req.flash("errors", {login:"이메일 또는 비밀번호가 일치하지 않습니다."});
           return done(null, false);
         }
       });

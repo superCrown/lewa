@@ -21,7 +21,7 @@ db.once('open', function () {
     console.log('mongodb connect');
 });
 
-var connect = mongoose.connect('mongodb://127.0.0.1:27017/loud6', 
+var connect = mongoose.connect('mongodb://127.0.0.1:27017/loud8', 
 {
     useMongoClient: true
 });
@@ -58,15 +58,19 @@ var sessionMiddleWare = session({
     })
 });
 
+
+
 app.use(sessionMiddleWare);
 
 app.use(flash());
 
-app.use(function(req,res,next){
-  res.locals.isAuthenticated = req.isAuthenticated();
-  res.locals.currentUser = req.user;
+app.use(function(req, res, next) {
+  app.locals.isLogin = req.isAuthenticated();
+  //app.locals.urlparameter = req.url; //현재 url 정보를 보내고 싶으면 이와같이 셋팅
+  app.locals.userData = req.user; //사용 정보를 보내고 싶으면 이와같이 셋팅
   next();
-})
+});
+
 
 // Passport
 app.use(passport.initialize());

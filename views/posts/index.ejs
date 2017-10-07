@@ -10,7 +10,7 @@
       <% include ./partials/header %>
 
       <div class="buttons">
-        <% if(isAuthenticated){ %>
+        <% if(isLogin){ %>
           <a class="btn btn-default" href="/posts/new">New</a>
         <% } %>
       </div>
@@ -35,7 +35,7 @@
                 <a href="/posts/<%= post._id %>"><div class="ellipsis"><%= post.title %></div></a>
               </td>
               <td class="author">
-                <div class="ellipsis"><%= post.author ? post.author.username : "" %></div>
+                <div class="ellipsis"><%= post.author ? post.author.name : "" %></div>
               </td>
               <td class="date">
                 <%= post.createdDate %>
