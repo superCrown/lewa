@@ -3,13 +3,14 @@ var app = express();
 var router = express.Router();
 
 var index = require('./index');
-var accounts = require('./accounts/accounts');
-var customer = require('./customer/customer');
+var posts = require('./posts');
+var users = require('./users');
+
 
 
 router.use('/', index);
-router.use('/accounts', accounts);
-router.use('/customer', customer);
+router.use('/posts', posts);
+router.use('/users', users);
 
 
 

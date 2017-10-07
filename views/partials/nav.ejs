@@ -1,0 +1,100 @@
+<!--<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand">My Website</div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/posts">게시판</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if(isAuthenticated){ %>
+          <li><a href="/users/<%= currentUser.username %>">My Account</a></li>
+          <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+          <li><a href="/users/new">Sign Up</a></li>
+          <li><a href="/login">Login</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>-->
+
+<!-- ======  Nav section start  ====== -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header"><a class="navbar-brand" href="/"><img src="/images/main/header_logo_w.png"/></a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">콘테스트 개최</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">콘테스트 개최하기<span class="glyphicon glyphicon-star" aria-hidden="true"/></a></li>
+                            <li role="presentation"><a href="#">고객 후기<span class="glyphicon glyphicon-star" aria-hidden="true"/></a></li>
+                            <li role="presentation"><a href="#">이용방법 안내</a></li>
+                            <li role="presentation"><a href="#">가격 안내</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">콘테스트 리스트</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">진행중인 콘테스트<span class="glyphicon glyphicon-star" aria-hidden="true"/></a></li>
+                            <li role="presentation"><a href="#">심사중인 콘테스트</a></li>
+                            <li role="presentation"><a href="#">종료된 콘테스트</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">포트폴리오</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">라우드 컬렉션<span class="glyphicon glyphicon-star" aria-hidden="true"/></a></li>
+                            <li role="presentation"><a href="#">전체 포트폴리오</a></li>
+                            <li role="presentation"><a href="#">대표 성공사례</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">기타 서비스</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">간단한 디자인서비스</a></li>
+                            <li role="presentation"><a href="#">상표권 출원</a></li>
+                            <li role="presentation"><a href="#">홈페이지 제작</a></li>
+                            <li role="presentation"><a href="#">인쇄/출력</a></li>
+                            <li role="presentation"><a href="#">공모전 대행</a></li>
+                            <li role="presentation"><a href="#">광고 문의</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">디자이너<span class="glyphicon glyphicon-star" aria-hidden="true"/></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">디자이너 리스트</a></li>
+                            <li role="presentation"><a href="#">디자이너 채용</a></li>
+                            <li role="presentation"><a href="#">디자이너 소식<span class="glyphicon glyphicon-star" aria-hidden="true"/></a></li>
+                            <li role="presentation"><a href="#">이벤트&지원</a></li>
+                            <li role="presentation"><a href="#">Facebook</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">고객센터</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="/posts">자주 하는 질문</a></li>
+                            <li role="presentation"><a href="#">문의게시판</a></li>
+                            <li role="presentation"><a href="#">공지사항<span class="glyphicon glyphicon-star" aria-hidden="true"/></a></li>
+                            <li role="presentation"><a href="#">라우더스채용</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right login-section">
+                <% if(isAuthenticated){%>
+                            <li><a href="/logout" onclick="return confirm('로그아웃 하시겠습니까?')">LOGOUT</a></li>
+                            <li><a href="/users/<%=users.id%>"><%=users.name%>님</a></li>
+                        <%}else{%>
+                    <li role="presentation" class="login"><a href="/login"><span class="glyphicon glyphicon-off logicon" aria-hidden="true"></span>로그인</a></li>
+                    <li role="presentation" class="sign-up"><a href="/users/new"><span class="glyphicon glyphicon-user logicon" aria-hidden="true"></span>회원가입</a></li>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- ======  Nav section end  ====== -->
